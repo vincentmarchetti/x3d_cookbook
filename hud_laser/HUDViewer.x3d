@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Immersive' version='3.3' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.3.xsd'>
+  <head>
+  </head>
+  <Scene>
+    <!-- HUD = Heads-Up Display, which stays on screen in same relative location even while user navigates -->
+    <Viewpoint/>
+
+    <ProximitySensor DEF='HereIAm' size='100 100 100'/>
+    <Transform scale="0.1 0.1 0.1">
+    <Inline DEF='ModelInline' url='"laser_cad.x3d"'/>
+    </Transform>
+    <Transform DEF='HUD'>
+      <Transform DEF='PushBack' translation='-.4 1. -3'>
+        <Shape>
+          <Appearance>
+            <Material emissiveColor='1 1 1'/>
+          </Appearance>
+          <Box size='1.5 .2 .05'/>
+        </Shape>
+        <Transform DEF='HudContents' translation='-.7 .24 .1'>
+          <Transform DEF='TopText' translation='0 -.2 0'>
+            <Shape>
+              <Appearance DEF='Text_app'>
+                <Material diffuseColor='0 0 0'/>
+              </Appearance>
+              <Text DEF='TopTextLine' string='"LASER ASM"'>
+                <FontStyle DEF='TextStyle' family='"SANS" "SERIF"' justify='"BEGIN" "BEGIN"' size='0.1'/>
+              </Text>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+    <Script DEF='CnvText' url='"ConvertText.js"'>
+      <field accessType='inputOnly' name='position' type='SFVec3f'/>
+      <field accessType='inputOnly' name='orientation' type='SFRotation'/>
+      <field accessType='outputOnly' name='positionText' type='MFString'/>
+      <field accessType='outputOnly' name='orientationText' type='MFString'/>
+    </Script>
+    <ROUTE fromField='orientation_changed' fromNode='HereIAm' toField='rotation' toNode='HUD'/>
+    <ROUTE fromField='position_changed' fromNode='HereIAm' toField='translation' toNode='HUD'/>
+    <ROUTE fromField='position_changed' fromNode='HereIAm' toField='position' toNode='CnvText'/>
+    <ROUTE fromField='orientation_changed' fromNode='HereIAm' toField='orientation' toNode='CnvText'/>
+    <!-- <ROUTE fromField='positionText' fromNode='CnvText' toField='string' toNode='TopTextLine'/> -->
+  </Scene>
+</X3D>
