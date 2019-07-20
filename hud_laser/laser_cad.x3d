@@ -11,7 +11,7 @@
     <meta content="X3D generation test code: initial_construction branch" name="generator"/>
   </head>
   <Scene>
-    <Background skyColor="0.1 0.7 0.7">
+    <Background skyColor="0.7 0.7 0.7">
       
     </Background>
     <DirectionalLight ambientIntensity="  0.2" color="1.000000 1.000000 1.000000" direction=" -3.5355e-01  -3.5355e-01  -8.6603e-01" intensity="  0.4"/>
