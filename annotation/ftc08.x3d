@@ -10,9 +10,8 @@
     <meta name="generator" content="STEP to X3D conversion code: kshell/step_x3d/branches/basic_cad"/>
   </head>
   <Scene>
-    <Background skyColor="0.094100 0.137300 0.498000">
-      <MetadataString name="color" value="&quot;tienen miedo&quot;" reference="http://www.colourlovers.com/color/18237F/tienen_miedo"/>
-    </Background>
+    <Background skyColor="1 1 1"/>
+      
     <DirectionalLight ambientIntensity="  0.0" color="1.000000 1.000000 1.000000" direction=" -3.5355e-01  -3.5355e-01  -8.6603e-01" intensity="  1.0"/>
     <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Oblique view" fieldOfView="  1.6628e-01" orientation="0.901 0.241 0.361 1.277" position="  7.0207e+01  -1.2160e+02   5.9112e+01"/>
     <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Top" fieldOfView="  1.6628e-01" orientation="1.000 0.000 0.000 0.000" position="  0.0000e+00   0.0000e+00   1.5293e+02"/>
