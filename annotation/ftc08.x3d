@@ -10,13 +10,106 @@
     <meta name="generator" content="STEP to X3D conversion code: kshell/step_x3d/branches/basic_cad"/>
   </head>
   <Scene>
+    <NavigationInfo headlight="FALSE"/>
     <Background skyColor="1 1 1"/>
       
-    <DirectionalLight ambientIntensity="  0.0" color="1.000000 1.000000 1.000000" direction=" -3.5355e-01  -3.5355e-01  -8.6603e-01" intensity="  1.0"/>
-    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Oblique view" fieldOfView="  1.6628e-01" orientation="0.901 0.241 0.361 1.277" position="  7.0207e+01  -1.2160e+02   5.9112e+01"/>
-    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Top" fieldOfView="  1.6628e-01" orientation="1.000 0.000 0.000 0.000" position="  0.0000e+00   0.0000e+00   1.5293e+02"/>
-    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Bottom" fieldOfView="  1.6628e-01" orientation="1.000 0.000 0.000 3.142" position="  0.0000e+00  -1.8613e-14  -1.5103e+02"/>
-    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Right side" fieldOfView="  1.6628e-01" orientation="0.577 0.577 0.577 2.094" position="  1.5198e+02  -9.3063e-15   9.5000e-01"/>
+    <DirectionalLight ambientIntensity="  0.5" color="1.000000 1.000000 1.000000" direction=" -3.5355e-01  -3.5355e-01  -8.6603e-01" intensity="  1.0"/>
+    <DirectionalLight ambientIntensity="  0.0" color="1.000000 1.000000 1.000000" direction="-0.9  0 0.1" intensity="  0.8"/>
+    
+    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Top" fieldOfView="  1.6628e-01" orientation="0.000 0.000 1.000 1.57" position="  0.0000e+00   0.0000e+00   1.5293e+02"/>
+
+    <Transform translation="2.34 2.45 1.90">
+        <Switch DEF="leader_line_switch" whichChoice="0">
+        <Group> <!-- leader line to Main Body -->
+        <Shape>
+            <Appearance DEF="leader_appearance">
+                <Material diffuseColor="0 0 0"/>
+                <LineProperties linewidthScaleFactor="2"/>
+            </Appearance>
+            <Sphere radius="0.1"/>
+        </Shape>
+        <Shape>
+            <Appearance USE="leader_appearance"/>
+            <LineSet vertexCount="2">
+                <Coordinate point="0 0 0, -1.0 2.0 0.3"/>
+            </LineSet>
+        </Shape>
+        
+        <Transform translation="-1.0 2.0 0.3">
+            <Billboard axisOfRotation = "1 0 0">
+            <Transform translation="-0.1 0 0" scale = "4.5e-3 4.5e-3 1">
+            <Shape>
+            <IndexedFaceSet coordIndex="0 1 2 3"  solid="true">
+                <Coordinate point="0 0 0,  75 0 0 ,75 621 0, 0 621 0"/>
+                <TextureCoordinate point='0 1, 0 0, 1 0, 1 1'/>
+            </IndexedFaceSet>
+            <Appearance>
+                <Material emissiveColor="1 1 1"/>                
+                <ImageTexture repeatS='true' repeatT='true' url='"gdt_markup.png"'/>
+            </Appearance>
+            </Shape>
+            </Transform>
+            </Billboard>
+        </Transform>
+        </Group>
+        </Switch> <!-- end leader_line_switch -->
+    </Transform>
+    
+    <Transform translation="5.749 1.139 1.579">
+    <Switch DEF="engravingleader_line_switch" whichChoice="0">
+    <Group>
+        <Shape>
+            <Appearance DEF="leader_appearance">
+                <Material diffuseColor="0 0 0"/>
+                <LineProperties linewidthScaleFactor="2"/>
+            </Appearance>
+            <Sphere radius="0.1"/>
+        </Shape>
+        <Shape>
+            <Appearance USE="leader_appearance"/>
+            <LineSet vertexCount="2">
+                <Coordinate point="0 0 0, +1.0 1.5 0.5"/>
+            </LineSet>
+        </Shape>    
+        
+        <Transform translation="+1.0 1.5 0.5">
+            <Billboard axisOfRotation = "0 1 0">
+                 
+                <Transform rotation="0 0 1 1.57" translation="-0.2 0.2 0">
+                <Shape>
+                    <Text string='"engraving depth: 0.1"'>
+                    <FontStyle style='PLAIN' family='SERIF' size="0.4"/>
+                </Text>
+                <Appearance>  
+                <Material diffuseColor="0 0 0"/>
+                </Appearance>
+                </Shape>
+                </Transform>
+
+                <Transform scale="0.7 4.0 1.0">
+                <Shape> 
+                    <IndexedFaceSet coordIndex="0 1 2 3"  solid="TRUE">
+                        <Coordinate point="0 0 -0.05,  0 1 -0.05 ,-1 1 0, -1 0 -0.05"/>
+                    </IndexedFaceSet>
+                    <Appearance>
+                        <Material emissiveColor="1 1 1"/>                
+                    </Appearance>
+                </Shape>
+                </Transform>
+                
+                <Shape>
+                    <Appearance USE="leader_appearance"/>
+                    <LineSet vertexCount="2">
+                       <Coordinate point="0 0 0, 0.0 3.75 0.0"/>
+                    </LineSet>
+                </Shape>
+            
+            </Billboard>
+        </Transform>
+    </Group>
+    </Switch>
+    
+    </Transform>
     <CADPart bboxCenter="0.000000 0.000000 0.950000" bboxSize="12.268000 8.768000 1.900000" name="None">
       <MetadataSet containerField="metadata" name="_collection">
         <MetadataString containerField="value" name="version" value="&quot;#12&quot;"/>
