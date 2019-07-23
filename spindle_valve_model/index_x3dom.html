@@ -1,79 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Spindle Valve</title>
-        <script type='text/javascript' charset="UTF-8" src='https://x3dom.org/release/x3dom-full.js'></script> 
-        <link rel='stylesheet' type='text/css' href='http://www.x3dom.org/release/x3dom.css'></link>
+    <title>Controlled Motion</title>
+        <script type="text/javascript" charset="UTF-8" src="https://x3dom.org/release/x3dom-full.js"> </script> 
+        <link rel="stylesheet" type="text/css" href="https://x3dom.org/release/x3dom.css"/> 
+        
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-         
         <style>
-            body { margin:2em; }
+            body { }
             
-            .canvas-sized {height:640px; width:960px;}
+            .canvas-width {width:720px;}
+            .canvas-height {height:360px; }
             x3d
             {
                 border:2px solid black;
+                border-bottom:0px;
             }
+            
+            #controls input {width:100%;}
+            #controls tr {height:32px;}
+            #controls tr td+td {width:70%;}
+            
+            #ack {margin-top:1em}
         </style>
 
 </head>
 <body>
-        <script type="text/javascript">
-            
-            /*
-            find_interpolator searches the loaded X3D scene for a particular node that serves
-            whose "set_fraction" field serves as an input for the value that controls the displayed
-            disassembly animation - a value from 0 to 1
-            
-            Search is done by element Tag and value of the DEF attribute. This is implemented
-            in basic Javascript-DOM functionality; common Javascript frameworks commonly provide
-            a more concise notation for this type of search.
-            
-            This search cannot be conducted until after the X3D scene is imported from the external file,
-            therefore this function will be defined as the "onload" handler for the X3DOM inline node.
-            */
-            function find_interpolator(){
-                var interpolators   = document.getElementsByTagName("ScalarInterpolator");
-                for (var j=0; j<interpolators.length;j++){
-                    var label=interpolators[j].getAttribute("DEF");
-                    if (interpolators[j].getAttribute("DEF") == "AssemblyStageFraction"){
-                        document.interpolator=interpolators[j];
-                    }
-                    if (interpolators[j].getAttribute("DEF") == "TopNutFraction"){
-                        document.top_nut_fraction=interpolators[j];
-                    }
-                }
+<script type="text/javascript">
+    
+    /*
+    find_interpolator searches the loaded X3D scene for a particular node that serves
+    whose "set_fraction" field serves as an input for the value that controls the displayed
+    disassembly animation - a value from 0 to 1
+    
+    Search is done by element Tag and value of the DEF attribute. This is implemented
+    in basic Javascript-DOM functionality; common Javascript frameworks commonly provide
+    a more concise notation for this type of search.
+    
+    This search cannot be conducted until after the X3D scene is imported from the external file,
+    therefore this function will be defined as the "onload" handler for the X3DOM inline node.
+    */
+    function find_interpolator(){
+        var interpolators   = document.getElementsByTagName("ScalarInterpolator");
+        for (var j=0; j<interpolators.length;j++){
+            var label=interpolators[j].getAttribute("DEF");
+            if (interpolators[j].getAttribute("DEF") == "AssemblyStageFraction"){
+                document.interpolator=interpolators[j];
             }
-            
-            function moveit(val){
-                document.interpolator.setFieldValue("set_fraction", val);
+            if (interpolators[j].getAttribute("DEF") == "TopNutFraction"){
+                document.top_nut_fraction=interpolators[j];
             }
-            
-            function moveTopNut(val){
-                document.top_nut_fraction.setFieldValue("set_fraction", val);
-            }
-        </script>
+        }
+    }
+    
+    function moveit(val){
+        document.interpolator.setFieldValue("set_fraction", val);
+    }
+    
+    function moveTopNut(val){
+        document.top_nut_fraction.setFieldValue("set_fraction", val);
+    }
+</script>
+<div class="canvas-width canvas-height" style="margin-bottom:0px;">
+<x3d class="canvas-width canvas-height"> 
+<scene>
+<inline namespacename="foo"  url="valve.x3d" onload="find_interpolator()"></inline>
+</scene>
+</x3d> 
+</div><!-- div parent container of x3d element -->
+<div class="canvas-width" style="height:76px; border:2px solid black; border-top:2px solid gray">
+<table id="controls" style="width:100%; padding-top:8px; padding-left:1em; padding-right:1em">
+<tr> <td>Washer Disassembly</td>	<td><input  type="range" min="0.0" max="1.0" step="0.01" id="assemble1" value="0.0" oninput="moveit(value)"/></td> </tr>
+</table>
 
-        <div class="canvas-sized" style="margin-bottom:0px;">
-        <x3d class="canvas-sized"> 
-        <scene>
-        <inline nameSpaceName="foo" mapDEFToID="true" url="ValveSpindleAssembly.color.x3d" onload="find_interpolator()"></inline>
-        </scene>
-        </x3d> 
-        </div>
-        
-        <div style="width:960px; text-align:center; padding-top:2em;">
-        <div>Washer Disassembly</div>
-        <div>
-        <input style="width:720px;" type="range" min="0.0" max="1.0" step="0.01" id="assemble" value="0.0" oninput="moveit(value)"/>
-        </div>
-        </div>
-        
-        <div style="width:960px; text-align:center; padding-top:2em;">
-        <div>Top Nut Disassembly</div>
-        <div>
-        <input style="width:720px;" type="range" min="0.0" max="1.0" step="0.01" id="assemble" value="0.0" oninput="moveTopNut(value)"/>
-        </div>
-        </div>
+</div><!-- Enclosing table element with 3 controls -->
+<div id="ack">
+3D CAD models courtesy of <a href="http://www.supremeindia.co.in/">Supreme Enterprises</a>.
+</div>
 </body>
 </html>
