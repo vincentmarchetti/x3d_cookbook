@@ -45,7 +45,7 @@
             </IndexedFaceSet>
             <Appearance>
                 <Material emissiveColor="1 1 1"/>                
-                <ImageTexture repeatS='true' repeatT='true' url='"gdt_markup.png"'/>
+                <ImageTexture repeatS='true' repeatT='true' url='"https://cdn.glitch.com/d8bd4320-70e8-4354-a268-5d960edd1762%2Fgdt_markup.png?v=1563832127570" "gdt_markup.png"'/>
             </Appearance>
             </Shape>
             </Transform>
