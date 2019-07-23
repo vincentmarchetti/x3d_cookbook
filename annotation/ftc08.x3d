@@ -2,11 +2,10 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
 <X3D version="3.3" profile="CADInterchange">
   <head>
-    <unit category="length" name="INCH" conversionFactor="0.0254"/>
     <component name="Navigation" level="1"/>
-    <meta name="created" content="8 Jan 2018"/>
-    <meta name="reference" content="http://localhost:5000/cr/dummy_dataset"/>
-    <meta name="identifier" content="http://localhost:5000/cr/dummy00.x3d"/>
+    <meta name="created" content="15 July 2019"/>
+    <meta name="reference" content=""/>
+    <meta name="identifier" content=""/>
     <meta name="generator" content="STEP to X3D conversion code: kshell/step_x3d/branches/basic_cad"/>
   </head>
   <Scene>
@@ -16,11 +15,11 @@
     <DirectionalLight ambientIntensity="  0.5" color="1.000000 1.000000 1.000000" direction=" -3.5355e-01  -3.5355e-01  -8.6603e-01" intensity="  1.0"/>
     <DirectionalLight ambientIntensity="  0.0" color="1.000000 1.000000 1.000000" direction="-0.9  0 0.1" intensity="  0.8"/>
     
-    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Top" fieldOfView="  1.6628e-01" orientation="0.000 0.000 1.000 1.57" position="  0.0000e+00   0.0000e+00   1.5293e+02"/>
+    <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Top" fieldOfView="  1.6628e-01" orientation="0.000 0.000 1.000 1.57" position="0 0 150"/>
 
     <Transform translation="2.34 2.45 1.90">
-        <Switch DEF="leader_line_switch" whichChoice="0">
-        <Group> <!-- leader line to Main Body -->
+        <Switch DEF="CALLOUT_SWITCH" whichChoice="0">
+        <Group> <!-- group contains leader line and image -->
         <Shape>
             <Appearance DEF="leader_appearance">
                 <Material diffuseColor="0 0 0"/>
@@ -52,17 +51,25 @@
             </Billboard>
         </Transform>
         </Group>
-        </Switch> <!-- end leader_line_switch -->
+        </Switch> <!-- close the CALLOUT_SWITCH node -->
     </Transform>
+    
+    <ProximitySensor DEF="CALLOUT_VIEWING_VOLUME" enabled="TRUE" center="0 0 150" size="100 100 300"/>
+    <BooleanFilter DEF="CALLOUT_FILTER"/>
+    <IntegerTrigger DEF="SHOW_CALLOUT" integerKey=" 0"/>
+    <IntegerTrigger DEF="HIDE_CALLOUT" integerKey="-1"/>
+    
+    <ROUTE fromNode="CALLOUT_VIEWING_VOLUME" fromField="isActive" toNode="CALLOUT_FILTER" toField="set_boolean"/>
+    <ROUTE fromNode="CALLOUT_FILTER" fromField="inputTrue"    toNode="SHOW_CALLOUT"   toField="set_boolean"/>
+    <ROUTE fromNode="SHOW_CALLOUT"   fromField="triggerValue" toNode="CALLOUT_SWITCH" toField="whichChoice" />    
+    <ROUTE fromNode="CALLOUT_FILTER" fromField="inputFalse"   toNode="HIDE_CALLOUT"   toField="set_boolean"/>
+    <ROUTE fromNode="HIDE_CALLOUT"   fromField="triggerValue" toNode="CALLOUT_SWITCH" toField="whichChoice" />
     
     <Transform translation="5.749 1.139 1.579">
     <Switch DEF="engravingleader_line_switch" whichChoice="0">
     <Group>
         <Shape>
-            <Appearance DEF="leader_appearance">
-                <Material diffuseColor="0 0 0"/>
-                <LineProperties linewidthScaleFactor="2"/>
-            </Appearance>
+            <Appearance USE="leader_appearance"/>
             <Sphere radius="0.1"/>
         </Shape>
         <Shape>
