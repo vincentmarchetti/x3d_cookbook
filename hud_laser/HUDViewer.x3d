@@ -6,12 +6,17 @@
   <Scene>
     <!-- HUD = Heads-Up Display, which stays on screen in same relative location even while user navigates -->
     <Viewpoint/>
-
-    <ProximitySensor DEF='HereIAm' size='100 100 100'/>
+    <NavigationInfo headlight="false"/>
+    <DirectionalLight ambientIntensity="0.3" direction="0 0.7 0.7" intensity="0.7"/>
+    <DirectionalLight ambientIntensity="0.3" direction="0 -0.7 -0.7" intensity="0.7"/>
+    
+    
+    
+    <ProximitySensor DEF='VIEWER_PROXIMITY' size='100 100 100'/>
     <Transform scale="0.1 0.1 0.1">
-    <Inline DEF='ModelInline' url='"laser_cad.x3d"'/>
+    <Inline DEF='MODEL' url='"laser_cad.x3d"'/>
     </Transform>
-    <Transform DEF='HUD'>
+    <Transform DEF='HEADSUP_TRANSFORM'>
       <Transform DEF='PushBack' translation='-.4 1. -3'>
         <Shape>
           <Appearance>
@@ -19,30 +24,67 @@
           </Appearance>
           <Box size='1.5 .2 .05'/>
         </Shape>
-        <Transform DEF='HudContents' translation='-.7 .24 .1'>
-          <Transform DEF='TopText' translation='0 -.2 0'>
+        <Transform  translation='-.7 .24 .1'>
+          <Transform  translation='0 -.2 0'>
             <Shape>
-              <Appearance DEF='Text_app'>
+              <Appearance>
                 <Material diffuseColor='0 0 0'/>
               </Appearance>
-              <Text DEF='TopTextLine' string='"LASER ASM"'>
-                <FontStyle DEF='TextStyle' family='"SANS" "SERIF"' justify='"BEGIN" "BEGIN"' size='0.1'/>
+              <Text DEF='TopTextLine' string='"Laser Assembly"'>
+                <FontStyle family='"SANS" "SERIF"' justify='"BEGIN" "BEGIN"' size='0.1'/>
               </Text>
             </Shape>
           </Transform>
         </Transform>
       </Transform>
     </Transform>
-    <Script DEF='CnvText' url='"ConvertText.js"'>
+    <Script DEF='PRINT_VIEWER_STATUS'>
       <field accessType='inputOnly' name='position' type='SFVec3f'/>
       <field accessType='inputOnly' name='orientation' type='SFRotation'/>
-      <field accessType='outputOnly' name='positionText' type='MFString'/>
-      <field accessType='outputOnly' name='orientationText' type='MFString'/>
+        <![CDATA[ ecmascript:
+        
+            var persistentPosition;
+            var persistentOrientation;
+            
+            function position(value){
+                persistentPosition = value;
+                displayToConsole();
+            }
+            
+            function orientation(value){
+                persistentOrientation = value;
+                displayToConsole();
+            }
+            
+            function formattedPosition( value )
+            {
+                try{
+                    return "( " + value.x.toFixed(3) + ", " + value.y.toFixed(3) + ", " + value.z.toFixed(3) + " )";
+                } catch (e){
+                    return "UNDEFINED"
+                }
+            }
+            
+            function formattedOrientation( value )
+            {
+                try{
+                    return "( " + value[0].toFixed(3) + ", " + value[1].toFixed(3) + ", " + value[2].toFixed(3) + ", " + value[3].toFixed(2) + " )";
+                } catch (e){
+                    return e.toString()
+                }
+            }
+            
+            function displayToConsole(){                
+                Browser.println("viewer " + formattedPosition(persistentPosition) + " " + formattedOrientation(persistentOrientation) );                
+            }
+        ]]>      
     </Script>
-    <ROUTE fromField='orientation_changed' fromNode='HereIAm' toField='rotation' toNode='HUD'/>
-    <ROUTE fromField='position_changed' fromNode='HereIAm' toField='translation' toNode='HUD'/>
-    <ROUTE fromField='position_changed' fromNode='HereIAm' toField='position' toNode='CnvText'/>
-    <ROUTE fromField='orientation_changed' fromNode='HereIAm' toField='orientation' toNode='CnvText'/>
-    <!-- <ROUTE fromField='positionText' fromNode='CnvText' toField='string' toNode='TopTextLine'/> -->
+    
+    <ROUTE fromField='orientation_changed' fromNode='VIEWER_PROXIMITY' toField='rotation' toNode='HEADSUP_TRANSFORM'/>
+    <ROUTE fromField='position_changed' fromNode='VIEWER_PROXIMITY' toField='translation' toNode='HEADSUP_TRANSFORM'/>
+    
+    <ROUTE fromField='position_changed' fromNode='VIEWER_PROXIMITY' toField='position' toNode='PRINT_VIEWER_STATUS'/>
+    <ROUTE fromField='orientation_changed' fromNode='VIEWER_PROXIMITY' toField='orientation' toNode='PRINT_VIEWER_STATUS'/>
+    
   </Scene>
 </X3D>
