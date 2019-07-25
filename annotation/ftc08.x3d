@@ -3,10 +3,12 @@
 <X3D version="3.3" profile="CADInterchange">
   <head>
     <component name="Navigation" level="1"/>
+    <meta name="creator" content="Vincent Marchetti"/>
     <meta name="created" content="15 July 2019"/>
     <meta name="reference" content=""/>
     <meta name="identifier" content=""/>
     <meta name="generator" content="STEP to X3D conversion code: kshell/step_x3d/branches/basic_cad"/>
+    <meta name="license" content="http://creativecommons.org/licenses/by/4.0/"/>
   </head>
   <Scene>
     <NavigationInfo headlight="FALSE"/>
@@ -17,9 +19,9 @@
     
     <Viewpoint centerOfRotation="  0.0000e+00   0.0000e+00   9.5000e-01" description="Top" fieldOfView="  1.6628e-01" orientation="0.000 0.000 1.000 1.57" position="0 0 150"/>
 
-    <Transform translation="2.34 2.45 1.90">
-        <Switch DEF="CALLOUT_SWITCH" whichChoice="0">
-        <Group> <!-- group contains leader line and image -->
+    
+    <Switch DEF="CALLOUT_SWITCH" whichChoice="0">
+        <Transform translation="2.34 2.45 1.90"> <!-- group contains leader line and image -->
         <Shape>
             <Appearance DEF="leader_appearance">
                 <Material diffuseColor="0 0 0"/>
@@ -50,9 +52,9 @@
             </Transform>
             </Billboard>
         </Transform>
-        </Group>
-        </Switch> <!-- close the CALLOUT_SWITCH node -->
-    </Transform>
+        </Transform>
+    </Switch> <!-- close the CALLOUT_SWITCH node -->
+    
     
     <ProximitySensor DEF="CALLOUT_VIEWING_VOLUME" enabled="TRUE" center="0 0 150" size="100 100 300"/>
     <BooleanFilter DEF="CALLOUT_FILTER"/>
@@ -65,8 +67,7 @@
     <ROUTE fromNode="CALLOUT_FILTER" fromField="inputFalse"   toNode="HIDE_CALLOUT"   toField="set_boolean"/>
     <ROUTE fromNode="HIDE_CALLOUT"   fromField="triggerValue" toNode="CALLOUT_SWITCH" toField="whichChoice" />
     
-    <Transform translation="5.749 1.139 1.579">
-    <Switch DEF="engravingleader_line_switch" whichChoice="0">
+    <Transform translation="5.749 1.139 1.579">    
     <Group>
         <Shape>
             <Appearance USE="leader_appearance"/>
@@ -114,9 +115,8 @@
             </Billboard>
         </Transform>
     </Group>
-    </Switch>
-    
     </Transform>
+    
     <CADPart bboxCenter="0.000000 0.000000 0.950000" bboxSize="12.268000 8.768000 1.900000" name="None">
       <MetadataSet containerField="metadata" name="_collection">
         <MetadataString containerField="value" name="version" value="&quot;#12&quot;"/>
