@@ -4,8 +4,6 @@
     <title>Controlled Motion</title>
         <script type="text/javascript" charset="UTF-8" src="https://x3dom.org/release/x3dom-full.js"> </script> 
         <link rel="stylesheet" type="text/css" href="https://x3dom.org/release/x3dom.css"/> 
-        
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <style>
             body { }
             
@@ -44,21 +42,14 @@
         var interpolators   = document.getElementsByTagName("ScalarInterpolator");
         for (var j=0; j<interpolators.length;j++){
             var label=interpolators[j].getAttribute("DEF");
-            if (interpolators[j].getAttribute("DEF") == "AssemblyStageFraction"){
+            if (interpolators[j].getAttribute("DEF") == "ASSEMBLY_FRACTION"){
                 document.interpolator=interpolators[j];
-            }
-            if (interpolators[j].getAttribute("DEF") == "TopNutFraction"){
-                document.top_nut_fraction=interpolators[j];
             }
         }
     }
     
     function moveit(val){
         document.interpolator.setFieldValue("set_fraction", val);
-    }
-    
-    function moveTopNut(val){
-        document.top_nut_fraction.setFieldValue("set_fraction", val);
     }
 </script>
 <div class="canvas-width canvas-height" style="margin-bottom:0px;">
